@@ -1,0 +1,16 @@
+name: HotTimeEvent
+main: io.github.potato_y.hottimeevent.HotTimeEvent
+version: 1.0
+
+commands:
+  HotTimeEventTest:
+    description: 플러그인이 정상 작동하는지 확인하세요.
+    usage: /HET 를 입력하세요.
+    aliases:
+      - HET
+    permission: hottimeevent.het
+    permission-message: You do not have permission to use this command.
+
+permissions:
+  hottimeevent.het:
+    default: op
