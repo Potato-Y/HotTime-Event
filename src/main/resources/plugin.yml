@@ -11,6 +11,14 @@ commands:
     permission: hottimeevent.het
     permission-message: You do not have permission to use this command.
 
+  GiveAll:
+    description: 모든 유저에게 아이템을 지급합니다.
+    usage: /GiveAll 혹은 /GiveAll now
+    permission: hottimeevent.giveall
+    permission-message: You do not have permission to use this command.
+
 permissions:
   hottimeevent.het:
+    default: op
+  hottimeevent.giveall:
     default: op

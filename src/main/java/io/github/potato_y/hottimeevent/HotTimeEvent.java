@@ -9,15 +9,17 @@ public class HotTimeEvent extends JavaPlugin {
     @Override
     public void onEnable() {
         //플러그인 활성화
-        getLogger().info("§eHotTime event on");
+        getLogger().info("§cHotTime Event plugin on");
+        this.saveDefaultConfig();
 
         //플러그인 활성화
         getCommand("hottimeeventtest").setExecutor(new TestCommand());
+        getCommand("giveall").setExecutor(new GiveAll());
     }
 
     @Override
     public void onDisable() {
         //플러그인 비활성화
-        getLogger().info("Jong Plugin end");
+        getLogger().info("§cHotTime Event plugin end");
     }
 }
