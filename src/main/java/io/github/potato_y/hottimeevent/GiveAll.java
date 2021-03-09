@@ -11,8 +11,9 @@ import org.bukkit.scheduler.BukkitScheduler;
 public class GiveAll implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String s, String[] strings) {
+        String format = Bukkit.getPluginManager().getPlugin("HotTimeEvent").getConfig().getString("format");
         if (sender instanceof Player) { //플레이어야 명령어 실행 가능
-            Bukkit.broadcastMessage(Bukkit.getPluginManager().getPlugin("HotTimeEvent").getConfig().getString("format")+"곧 아이템이 지급됩니다! 인벤토리를 비워주세요!");
+            Bukkit.broadcastMessage(format + "곧 아이템이 지급됩니다! 인벤토리를 비워주세요!");
 
             ItemStack tempItem = ((Player) sender).getInventory().getItemInMainHand(); //유저가 들고 있는 아이템 정보 가져오기
             ItemStack giveItem = new ItemStack(tempItem); //유저가 가지고 있던 아이템 복사
@@ -45,38 +46,36 @@ public class GiveAll implements CommandExecutor {
             scheduler.scheduleSyncDelayedTask(Bukkit.getPluginManager().getPlugin("HotTimeEvent"), new Runnable() {
                 @Override
                 public void run() {
-                    Bukkit.broadcastMessage("[ §cHotTime Event§f ] " + 5 + "초 후 지급!");
+                    Bukkit.broadcastMessage(format + 5 + "초 후 지급!");
 
                     BukkitScheduler scheduler = Bukkit.getPluginManager().getPlugin("HotTimeEvent").getServer().getScheduler();
                     scheduler.scheduleSyncDelayedTask(Bukkit.getPluginManager().getPlugin("HotTimeEvent"), new Runnable() {
                         @Override
                         public void run() {
-                            Bukkit.broadcastMessage("[ §cHotTime Event§f ] " + 4 + "초 후 지급!");
+                            Bukkit.broadcastMessage(format + 4 + "초 후 지급!");
 
                             BukkitScheduler scheduler = Bukkit.getPluginManager().getPlugin("HotTimeEvent").getServer().getScheduler();
                             scheduler.scheduleSyncDelayedTask(Bukkit.getPluginManager().getPlugin("HotTimeEvent"), new Runnable() {
                                 @Override
                                 public void run() {
-                                    Bukkit.broadcastMessage("[ §cHotTime Event§f ] " + 3 + "초 후 지급!");
+                                    Bukkit.broadcastMessage(format + 3 + "초 후 지급!");
 
                                     BukkitScheduler scheduler = Bukkit.getPluginManager().getPlugin("HotTimeEvent").getServer().getScheduler();
                                     scheduler.scheduleSyncDelayedTask(Bukkit.getPluginManager().getPlugin("HotTimeEvent"), new Runnable() {
                                         @Override
                                         public void run() {
-                                            Bukkit.broadcastMessage("[ §cHotTime Event§f ] " + 2 + "초 후 지급!");
+                                            Bukkit.broadcastMessage(format + 2 + "초 후 지급!");
 
                                             BukkitScheduler scheduler = Bukkit.getPluginManager().getPlugin("HotTimeEvent").getServer().getScheduler();
                                             scheduler.scheduleSyncDelayedTask(Bukkit.getPluginManager().getPlugin("HotTimeEvent"), new Runnable() {
                                                 @Override
                                                 public void run() {
-                                                    Bukkit.broadcastMessage("[ §cHotTime Event§f ] " + 1 + "초 후 지급!");
+                                                    Bukkit.broadcastMessage(format + 1 + "초 후 지급!");
 
                                                     BukkitScheduler scheduler = Bukkit.getPluginManager().getPlugin("HotTimeEvent").getServer().getScheduler();
                                                     scheduler.scheduleSyncDelayedTask(Bukkit.getPluginManager().getPlugin("HotTimeEvent"), new Runnable() {
                                                         @Override
                                                         public void run() {
-                                                            Bukkit.broadcastMessage("[ §cHotTime Event§f ] " + 5 + "초 후 지급!");
-
                                                             giveAll(giveItem);
                                                         }
                                                     }, 20L);
@@ -92,10 +91,9 @@ public class GiveAll implements CommandExecutor {
             }, 20L);
 
 
-
             return true;
         } else if (sender instanceof CommandSender) {
-            sender.sendMessage("플레이어가 아닙니다.");
+            sender.sendMessage(format + "플레이어가 아닙니다.");
             return true;
         }
         return false;
@@ -110,6 +108,6 @@ public class GiveAll implements CommandExecutor {
             player.sendMessage(format + player.getName() + "님 인벤토리로 아이템이 지급 되었습니다.");
         }
 
-        Bukkit.broadcastMessage(format+"지급이 완료되었습니다!");
+        Bukkit.broadcastMessage(format + "지급이 완료되었습니다!");
     }
 }
