@@ -148,8 +148,8 @@ public class HotTimeEvent extends JavaPlugin {
                                 }
 
                             } else if (eventType.equals("specific")) {
-                                String setDay=getEventConfig().getString("EventList."+key+".date")+" "+getEventConfig().getString("EventList."+key+".time");
-                                if(setDay.equals(timeFormat_specificDayType.format(time)+" "+nowTime)) { //설정한 시간과 같은지 확인
+                                String setDay = getEventConfig().getString("EventList." + key + ".date") + " " + getEventConfig().getString("EventList." + key + ".time");
+                                if (setDay.equals(timeFormat_specificDayType.format(time) + " " + nowTime)) { //설정한 시간과 같은지 확인
                                     eventStart(key);
                                 }
                             } else {
