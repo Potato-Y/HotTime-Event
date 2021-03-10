@@ -12,6 +12,7 @@ public class GiveAll implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String s, String[] strings) {
         String format = Bukkit.getPluginManager().getPlugin("HotTimeEvent").getConfig().getString("format");
+
         if (sender instanceof Player) { //플레이어야 명령어 실행 가능
             Bukkit.broadcastMessage(format + "곧 아이템이 지급됩니다! 인벤토리를 비워주세요!");
 
@@ -110,4 +111,5 @@ public class GiveAll implements CommandExecutor {
 
         Bukkit.broadcastMessage(format + "지급이 완료되었습니다!");
     }
+
 }

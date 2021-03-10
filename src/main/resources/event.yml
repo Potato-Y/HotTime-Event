@@ -1,0 +1,15 @@
+# type list: loop
+version: "1.0"
+EventList:
+  defualtEvent:
+    name: "기본 보상"
+    type: "loop"
+    date: ""
+    time: "21:00"
+    item: "paper"
+    Amount: 1
+    DisplayName: "9시 접속 보상"
+    lore:
+      - "접속 보상"
+    Enchant:
+      - "luck_of_the_sea 1"

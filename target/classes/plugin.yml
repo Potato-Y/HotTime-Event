@@ -17,8 +17,32 @@ commands:
     permission: hottimeevent.giveall
     permission-message: You do not have permission to use this command.
 
+  HteReload:
+    description: config를 리로드 합니다.
+    usage: /htereload
+    permission: hottimeevent.reload
+    permission-message: You do not have permission to use this command.
+
+  EventList:
+    description: 이벤트 목록을 봅니다.
+    usage: /eventlist
+    permission: hottimeevent.event.list
+    permission-message: You do not have permission to use this command.
+
+  EventTest:
+    description: 이벤트 아이템을 테스트 합니다.
+    usage: /eventtest [Event Name]
+    permission: hottimeevent.event.test
+    permission-message: You do not have permission to use this command.
+
 permissions:
   hottimeevent.het:
     default: op
   hottimeevent.giveall:
+    default: op
+  hottmeevent.reload:
+    default: op
+  hottimeevent.event.list:
+    default: op
+  hottimeevent.event.test:
     default: op

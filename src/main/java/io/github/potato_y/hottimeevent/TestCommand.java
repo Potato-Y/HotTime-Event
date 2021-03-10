@@ -9,6 +9,9 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.scheduler.BukkitScheduler;
+
+import java.util.ArrayList;
+
 public class TestCommand implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String s, String[] strings) {
@@ -16,6 +19,10 @@ public class TestCommand implements CommandExecutor {
         ItemStack item = new ItemStack(Material.matchMaterial("paper")); //종이 아이템 생성
         ItemMeta itemMeta = item.getItemMeta(); //아이템 메타 데이터 생성 및 미리 생성한 아이템 메타 데이터 가져오기기
         itemMeta.setDisplayName("§cHotTime Event!"); //아이템 이름 변경
+        ArrayList<String> lore=new ArrayList<>();
+        lore.add("dd");
+        lore.add("sadf");
+        itemMeta.setLore(lore);
         item.setItemMeta(itemMeta); //변경한 메타 아이템 입혀주기
 
         delayTimeInformation(5, 1);
@@ -47,4 +54,3 @@ public class TestCommand implements CommandExecutor {
         }, delay * 20L);
     }
 }
-
