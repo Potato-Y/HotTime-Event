@@ -9,7 +9,6 @@ import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.enchantments.Enchantment;
-import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -37,7 +36,7 @@ public class HotTimeEvent extends JavaPlugin {
         reloadEventConfig();
 
         //플러그인 활성화
-        getCommand("hottimeeventtest").setExecutor(new TestCommand());
+        //getCommand("hottimeeventtest").setExecutor(new TestCommand());
         getCommand("giveall").setExecutor(new GiveAll());
         getCommand("htereload").setExecutor(new CommandExecutor() {
             @Override
@@ -58,7 +57,7 @@ public class HotTimeEvent extends JavaPlugin {
             }
         });
 
-        getCommand("eventtest").setExecutor(new CommandExecutor() {
+        getCommand("eventtest").setExecutor(new CommandExecutor() { //설정한 이벤트 아이템이 정상적으로 생성되는지 확인하는 용도
             @Override
             public boolean onCommand(CommandSender sender, Command command, String s, String[] strings) {
                 ConfigurationSection section = getEventConfig().getConfigurationSection("EventList");
@@ -77,7 +76,6 @@ public class HotTimeEvent extends JavaPlugin {
         });
 
         eventMonitering();
-
     }
 
     public void configReload() {

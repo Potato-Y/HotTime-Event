@@ -1,4 +1,8 @@
-# type list: loop
+# type list: loop, specific
+# date: "yyyy-MM-dd"
+# time: "HH:mm"
+# Enchant: All lowercase letters, all uppercase letters , 추후 수정 예정
+
 version: "1.0"
 EventList:
   defualtEvent:
