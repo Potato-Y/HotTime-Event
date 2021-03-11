@@ -107,6 +107,7 @@ public class GiveAll implements CommandExecutor {
         for (Player player : Bukkit.getOnlinePlayers()) {
             player.getInventory().addItem(itemStack);
             player.sendMessage(format + player.getName() + "님 인벤토리로 아이템이 지급 되었습니다.");
+            Bukkit.getLogger().info("§a"+player.getName()+"님에게 지급 완료");
         }
 
         Bukkit.broadcastMessage(format + "지급이 완료되었습니다!");

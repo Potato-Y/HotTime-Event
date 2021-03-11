@@ -18,8 +18,7 @@ import org.bukkit.scheduler.BukkitScheduler;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
+import java.util.*;
 
 public class HotTimeEvent extends JavaPlugin {
     private FileConfiguration eventConfig = null;
@@ -42,6 +41,7 @@ public class HotTimeEvent extends JavaPlugin {
             @Override
             public boolean onCommand(CommandSender commandSender, Command command, String s, String[] strings) {
                 configReload();
+                commandSender.sendMessage(getConfig().getString("format")+"Reload complete");
                 return true;
             }
         });
@@ -51,7 +51,7 @@ public class HotTimeEvent extends JavaPlugin {
         getCommand("eventlist").setExecutor(new CommandExecutor() {
             @Override
             public boolean onCommand(CommandSender sender, Command command, String s, String[] strings) {
-                sender.sendMessage(getEventConfig().getString("EventList.defualtEvent.name"));
+                sender.sendMessage(new Utility().colorCodeChange(getEventConfig().getString("EventList.defualtEvent.name")));
 
                 return true;
             }
@@ -81,8 +81,6 @@ public class HotTimeEvent extends JavaPlugin {
     public void configReload() {
         this.reloadConfig();
         reloadEventConfig();
-
-        getLogger().info("§bReload ok");
     }
 
     public void reloadEventConfig() {
@@ -128,6 +126,16 @@ public class HotTimeEvent extends JavaPlugin {
 
     public void eventMonitering() {
         tempTime = "";
+        HashMap<Integer, String> dayOfTheWeek = new HashMap<Integer, String>() {{
+            put(1, "sun");
+            put(2, "mon");
+            put(3, "tue");
+            put(4, "wed");
+            put(5, "thu");
+            put(6, "fri");
+            put(7, "sat");
+        }};
+
         BukkitScheduler scheduler = getServer().getScheduler();
         scheduler.scheduleSyncRepeatingTask(this, new Runnable() {
             @Override
@@ -140,16 +148,27 @@ public class HotTimeEvent extends JavaPlugin {
                     for (String key : section.getKeys(false)) {  //이벤트 하나당 작동
                         try {
                             String eventType = getEventConfig().getString("EventList." + key + ".type");
-                            if (eventType.equals("loop")) { //loop 타입에 맞게 시간 검사
+                            if (eventType.equals("everyday")) { //loop 타입에 맞게 시간 검사
                                 if (getEventConfig().getString("EventList." + key + ".time").equals(nowTime)) { //설정한 시간과 같으면 실행!
                                     eventStart(key);
                                 }
 
-                            } else if (eventType.equals("specific")) {
+                            } else if (eventType.equals("specific")) { //특정 날에 진행
                                 String setDay = getEventConfig().getString("EventList." + key + ".date") + " " + getEventConfig().getString("EventList." + key + ".time");
                                 if (setDay.equals(timeFormat_specificDayType.format(time) + " " + nowTime)) { //설정한 시간과 같은지 확인
                                     eventStart(key);
                                 }
+                            } else if (eventType.equals("week loop")) { //일주일에 지정한 요일에 진행
+                                Calendar calendar = Calendar.getInstance();
+                                String dayOfWeek = dayOfTheWeek.get(calendar.get(Calendar.DAY_OF_WEEK)); //오늘이 무슨 요일인지 지정
+                                String setDate = getEventConfig().getString("EventList." + key + ".date"); //설정한 요일 가져오기
+
+                                if (new Utility().textConversion(setDate, "a").contains(dayOfWeek)) { //오늘이 검색된다면
+                                    if (getEventConfig().getString("EventList." + key + ".time").equals(nowTime)) { //설정한 시간과 같으면 실행!
+                                        eventStart(key);
+                                    }
+                                }
+
                             } else {
                                 getLogger().info("§4 " + key + "값이 정상인지 확인하세요.");
                             }
@@ -251,7 +270,7 @@ public class HotTimeEvent extends JavaPlugin {
 
             for (String text : getEventConfig().getStringList(keyHeader + "Enchant")) {
                 try {
-                    itemMeta.addEnchant(new Utility().getEnchantment(text.split(" ")[0]), Integer.parseInt(text.split(" ")[1]), true);
+                    itemMeta.addEnchant(new Utility().getEnchantment(new Utility().textConversion(text.split(" ")[0], "A")), Integer.parseInt(text.split(" ")[1]), true);
                 } catch (Exception e) {
                     getLogger().info("§4인첸트 옵션에 문제가 있습니다.");
                 }
@@ -295,121 +314,120 @@ class Utility {
     public Enchantment getEnchantment(String value) {
         switch (value) {
             case "ARROW_FIRE":
-            case "arrow_fire":
                 return Enchantment.ARROW_FIRE;
             case "ARROW_DAMAGE":
-            case "arrow_damage":
                 return Enchantment.ARROW_DAMAGE;
             case "ARROW_INFINITE":
-            case "arrow_infinite":
                 return Enchantment.ARROW_INFINITE;
             case "ARROW_KNOCKBACK":
-            case "arrow_knockback":
                 return Enchantment.ARROW_KNOCKBACK;
             case "BINDING_CURSE":
-            case "binding_curse":
                 return Enchantment.BINDING_CURSE;
             case "CHANNELING":
-            case "channeling":
                 return Enchantment.CHANNELING;
             case "DAMAGE_ALL":
-            case "damage_all":
                 return Enchantment.DAMAGE_ALL;
             case "DAMAGE_ARTHROPODS":
-            case "damage_arthropods":
                 return Enchantment.DAMAGE_ARTHROPODS;
             case "DAMAGE_UNDEAD":
-            case "damage_undead":
                 return Enchantment.DAMAGE_UNDEAD;
             case "DEPTH_STRIDER":
-            case "depth_strider":
                 return Enchantment.DEPTH_STRIDER;
             case "DIG_SPEED":
-            case "dig_speed":
                 return Enchantment.DIG_SPEED;
             case "DURABILITY":
-            case "durability":
                 return Enchantment.DURABILITY;
             case "FIRE_ASPECT":
-            case "fire_aspect":
                 return Enchantment.FIRE_ASPECT;
             case "FROST_WALKER":
-            case "frost_walker":
                 return Enchantment.FROST_WALKER;
             case "IMPALING":
-            case "impaling":
                 return Enchantment.IMPALING;
             case "KNOCKBACK":
-            case "knockback":
                 return Enchantment.KNOCKBACK;
             case "LOOT_BONUS_BLOCKS":
-            case "loot_bonus_blocks":
                 return Enchantment.LOOT_BONUS_BLOCKS;
             case "LOOT_BONUS_MOBS":
-            case "loot_bonus_mobs":
                 return Enchantment.LOOT_BONUS_MOBS;
             case "LOYALTY":
-            case "loyalty":
                 return Enchantment.LOYALTY;
             case "LUCK":
-            case "luck":
                 return Enchantment.LUCK;
             case "LURE":
-            case "lure":
                 return Enchantment.LURE;
             case "MENDING":
-            case "mending":
                 return Enchantment.MENDING;
             case "MULTISHOT":
-            case "multishot":
                 return Enchantment.MULTISHOT;
             case "OXYGEN":
-            case "oxygen":
                 return Enchantment.OXYGEN;
             case "PIERCING":
-            case "piercing":
                 return Enchantment.PIERCING;
             case "PROTECTION_ENVIRONMENTAL":
-            case "protection_environmental":
                 return Enchantment.PROTECTION_ENVIRONMENTAL;
             case "PROTECTION_EXPLOSIONS":
-            case "protection_explosions":
                 return Enchantment.PROTECTION_EXPLOSIONS;
             case "PROTECTION_FIRE":
-            case "protection_fire":
                 return Enchantment.PROTECTION_FIRE;
             case "PROTECTION_FALL":
-            case "protection_fall":
                 return Enchantment.PROTECTION_FALL;
             case "PROTECTION_PROJECTILE":
-            case "protection_projectile":
                 return Enchantment.PROTECTION_PROJECTILE;
             case "QUICK_CHARGE":
-            case "quick_charge":
                 return Enchantment.QUICK_CHARGE;
             case "RIPTIDE":
-            case "riptide":
                 return Enchantment.RIPTIDE;
             case "SILK_TOUCH":
-            case "silk_touch":
                 return Enchantment.SILK_TOUCH;
             case "SOUL_SPEED":
-            case "soul_speed":
                 return Enchantment.SOUL_SPEED;
             case "SWEEPING_EDGE":
-            case "sweeping_edge":
                 return Enchantment.SWEEPING_EDGE;
             case "THORNS":
-            case "thorns":
                 return Enchantment.THORNS;
             case "VANISHING_CURSE":
-            case "vanishing_curse":
                 return Enchantment.VANISHING_CURSE;
             case "WATER_WORKER":
-            case "water_worker":
                 return Enchantment.WATER_WORKER;
             default:
                 return Enchantment.LUCK;
         }
+    }
+
+    public String textConversion(String text, String type) { //모두 대문자로 변환
+        if (type.length() == 0) {
+            return "NOT FOUND";
+        }
+
+        char temp; //임시 저장
+        String outputText = ""; //return
+        boolean typeTemp; //어느 타입으로 할지 결정 true=대문자로 변환, false 소문자로 변환
+
+        if ((97 <= type.toCharArray()[0]) && (type.toCharArray()[0] <= 122)) {
+            typeTemp = false;
+        } else {
+            typeTemp = true;
+        }
+
+        for (int i = 0; i < text.length(); i++) {
+            temp = text.charAt(i);
+
+            if (typeTemp == true) { //대문자로 변환 시키기
+                if ((97 <= temp) && (temp <= 122)) {
+                    outputText += String.valueOf(temp).toUpperCase();
+                } else {
+                    outputText += (char) temp;
+                }
+            } else if (typeTemp == false) {
+                if ((65 <= temp) && (temp <= 90)) {
+                    outputText += String.valueOf(temp).toLowerCase();
+                } else {
+                    outputText += (char) temp;
+                }
+            }
+
+
+        }
+        return outputText;
     }
 }

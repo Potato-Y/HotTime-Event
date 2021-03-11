@@ -1,13 +1,18 @@
-# type list: loop, specific
-# date: "yyyy-MM-dd"
+# type list: everyday, specific, week loop]
+# Required items by type
+# everyday: time
+# specific: date, time
+# week loop: date, time
+#
+# date: "yyyy-MM-dd" or "sun fri"
 # time: "HH:mm"
-# Enchant: All lowercase letters, all uppercase letters , 추후 수정 예정
+# Enchant: Spaces are marked with '_'
 
 version: "1.0"
 EventList:
   defualtEvent:
     name: "기본 보상"
-    type: "loop"
+    type: "everyday"
     date: ""
     time: "21:00"
     item: "paper"
