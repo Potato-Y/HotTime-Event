@@ -51,7 +51,11 @@ public class HotTimeEvent extends JavaPlugin {
         getCommand("eventlist").setExecutor(new CommandExecutor() {
             @Override
             public boolean onCommand(CommandSender sender, Command command, String s, String[] strings) {
-                sender.sendMessage(new Utility().colorCodeChange(getEventConfig().getString("EventList.defualtEvent.name")));
+                ConfigurationSection section = getEventConfig().getConfigurationSection("EventList");
+                for (String key : section.getKeys(false)) {  //이벤트 하나당 작동
+                    sender.sendMessage(new Utility().colorCodeChange(getEventConfig().getString("EventList."+key+".name")));
+                }
+
 
                 return true;
             }
