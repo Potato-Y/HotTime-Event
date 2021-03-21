@@ -41,7 +41,7 @@ public class HotTimeEvent extends JavaPlugin {
             @Override
             public boolean onCommand(CommandSender commandSender, Command command, String s, String[] strings) {
                 configReload();
-                commandSender.sendMessage(getConfig().getString("format")+"Reload complete");
+                commandSender.sendMessage(getConfig().getString("format") + "Reload complete");
                 return true;
             }
         });
@@ -53,7 +53,7 @@ public class HotTimeEvent extends JavaPlugin {
             public boolean onCommand(CommandSender sender, Command command, String s, String[] strings) {
                 ConfigurationSection section = getEventConfig().getConfigurationSection("EventList");
                 for (String key : section.getKeys(false)) {  //이벤트 하나당 작동
-                    sender.sendMessage(new Utility().colorCodeChange(getEventConfig().getString("EventList."+key+".name")));
+                    sender.sendMessage(new Utility().colorCodeChange(getEventConfig().getString("EventList." + key + ".name")));
                 }
 
 
@@ -189,7 +189,7 @@ public class HotTimeEvent extends JavaPlugin {
     public void eventStart(String eventName) { //이벤트 시작
         ItemStack itemStack = itemCustom(eventName);
 
-        Bukkit.broadcastMessage(getConfig().getString("format") + "곧 \"" + getEventConfig().getString("EventList."+eventName+"name") + "\" 핫타임 아이템이 지급됩니다! 인벤토리를 미리 비워주세요!");
+        Bukkit.broadcastMessage(getConfig().getString("format") + "곧 \"" + getEventConfig().getString("EventList." + eventName + ".name") + "\" 핫타임 아이템이 지급됩니다! 인벤토리를 미리 비워주세요!");
 
         BukkitScheduler scheduler = getServer().getScheduler();
         scheduler.scheduleSyncDelayedTask(this, new Runnable() {
