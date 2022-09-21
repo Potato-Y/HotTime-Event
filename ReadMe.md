@@ -2,9 +2,6 @@
 
 Minecraft Plugin : Hottime event &amp; Give all
 
-> ! 영어 버전은 준비 중입니다.<br>
-> ! The English version is in preparation.
-
 ## 이 플러그인은 무엇입니까?
 
 이 플러그인은 마인크래프트 서버에서 핫타임 아이템 지급 이벤트에 사용할 수 있는 간단한 플러그인입니다.
